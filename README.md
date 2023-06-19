@@ -6,7 +6,7 @@
 - Board："ESP32 Wrover 
 Module"
 - Partition Scheme ："Huge APP"(3MB NO OTA/1mb spiffs)
-- download mode：Flash按住不放 + Rest，再放開。
+- download mode：Flash按住不放 + Reset，再放開。
 - 使用範例->ESP32->Camera->CameraWebServer
 - 註解：CAMERA_MODEL_WROVER_KIT
 - 打開：CAMERA_MODEL_AI_THINKER
