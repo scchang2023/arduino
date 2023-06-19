@@ -19,8 +19,10 @@
 
 #include "camera_pins.h"
 
-const char* ssid = "HUAWEI-B315-9878";
-const char* password = "64TA6NG2DQR";
+//const char* ssid = "HUAWEI-B315-9878";
+//const char* password = "64TA6NG2DQR";
+const char* ssid = "linkou203-4F";
+const char* password = "56665666";
 
 void startCameraServer();
 
