@@ -11,9 +11,9 @@ Module"
 - 註解：CAMERA_MODEL_WROVER_KIT
 - 打開：CAMERA_MODEL_AI_THINKER
 ### issue
-- 使用 Arduino core for esp32 V1.0.5 以上版本就無法使用人臉偵測與人臉辨識，一啟動人臉偵測就出錯重啟！
-    - 釋放net_boxes記憶體時產生錯誤
-    - 修改部份如下，修改完後 v1.0.5以上的版本就可以使用了。
+- 使用 Arduino core for esp32 V1.0.5 以上版本就無法使用人臉偵測與人臉辨識，一啟動人臉偵測就出錯重啟。
+    - 主要是釋放net_boxes記憶體時產生錯誤
+    - 修改部份如下，修改完後 v1.0.5 以上的版本就可以使用了。
     ```
     app_httpd.cpp
 
