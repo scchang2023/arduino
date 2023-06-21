@@ -1,15 +1,22 @@
 # Arduino
 ## ESP32
 ## ESP8266
+### 環境設定
+- Board MANAGER：esp8266 by ESP8266 Community
+- Board："LOLIN(WeMos)D1 R1"
+### remote box
+### OTA
+- Basic OTA
+- Ele OTA
+
 ## ESP32-CAM
 ### 環境設定
-- Board："ESP32 Wrover 
-Module"
+- Board："ESP32 Wrover Module"
 - Partition Scheme ："Huge APP"(3MB NO OTA/1mb spiffs)
 - download mode：Flash按住不放 + Reset，再放開。
 - 使用範例->ESP32->Camera->CameraWebServer
-- 註解：CAMERA_MODEL_WROVER_KIT
-- 打開：CAMERA_MODEL_AI_THINKER
+- 註解 #define CAMERA_MODEL_WROVER_KIT
+- 打開 #define CAMERA_MODEL_AI_THINKER
 ### issue
 - 使用 Arduino core for esp32 V1.0.5 以上版本就無法使用人臉偵測與人臉辨識，一啟動人臉偵測就出錯重啟。
     - 主要是釋放net_boxes記憶體時產生錯誤
