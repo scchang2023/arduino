@@ -2,16 +2,26 @@
 ## ESP32
 ## ESP8266
 ### 環境設定
-- Board MANAGER：esp8266 by ESP8266 Community
-- Board："LOLIN(WeMos)D1 R1"
-### remote box
+- Board Manager：esp8266 by ESP8266 Community v3.1.2
+- Board："ESP8266 > LOLIN(WeMos)D1 R1"
 ### OTA
 - Basic OTA
+    - #include <ArduinoOTA.h>
+    - File > Examples > Arduino OTA > BasicOTA.ino，使用內建範例修改。
 - Ele OTA
-
+    - install Library AsyncElegantOTA
+    - install Library ESPAsyncTcp
+    - #include <ESPAsyncTCP.h>
+    - #include <ESPAsyncWebServer.h>
+    - #include <AsyncElegantOTA.h>
+### 手機控制(App)
+- Blynk
+    - install Library Blynk
+    - #include <BlynkSimpleEsp8266.h>
 ## ESP32-CAM
 ### 環境設定
-- Board："ESP32 Wrover Module"
+- Board Manager："ESP32 by Espressif Systems" v1.0.6
+- Board："ESP32 > ESP32 Wrover Module"
 - Partition Scheme ："Huge APP"(3MB NO OTA/1mb spiffs)
 - download mode：Flash按住不放 + Reset，再放開。
 - 使用範例->ESP32->Camera->CameraWebServer
