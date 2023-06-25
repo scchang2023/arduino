@@ -14,10 +14,9 @@
     - #include <ESPAsyncTCP.h>
     - #include <ESPAsyncWebServer.h>
     - #include <AsyncElegantOTA.h>
-### 手機控制(App)
-- Blynk
-    - install Library Blynk
-    - #include <BlynkSimpleEsp8266.h>
+### Blynk
+- install Library Blynk
+- #include <BlynkSimpleEsp8266.h>
 ## ESP32-CAM
 ### 環境設定
 - Board Manager："ESP32 by Espressif Systems" v1.0.6
