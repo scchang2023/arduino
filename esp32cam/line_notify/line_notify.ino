@@ -12,7 +12,7 @@ char* password = "56665666";
 String Linetoken = "WZOXUjuecnR60keRBxIKTZBOGXy2soFzvoshoJOVdsP"; //改為您的Line權杖密碼
 String SendImageLine(String msg, camera_fb_t * fb) {
   WiFiClientSecure client_tcp;
-  client_tcp.setInsecure();
+  client_tcp.setInsecure(); //run version 1.0.5 or above
   if (client_tcp.connect("notify-api.line.me", 443)) {
     Serial.println("連線到Line成功");
     //組成HTTP POST表頭
