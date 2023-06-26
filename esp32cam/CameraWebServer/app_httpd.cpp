@@ -186,8 +186,16 @@ static int run_face_recognition(dl_matrix3du_t *image_matrix, box_array_t *net_b
         } else {
             matched_id = recognize_face(&id_list, aligned_face);
             if (matched_id >= 0) {
+                ledcSetup(7,50,8);
+                ledcAttachPin(2, 7);
+                Serial.println("發現白名單，開門");
+                ledcWrite(7, 18.56);
+                delay(5000);
+                Serial.println("關門");
+                ledcWrite(7, 6.4);
                 Serial.printf("Match Face ID: %u\n", matched_id);
                 rgb_printf(image_matrix, FACE_COLOR_GREEN, "Hello Subject %u", matched_id);
+                
             } else {
                 Serial.println("No Match Found");
                 rgb_print(image_matrix, FACE_COLOR_RED, "Intruder Alert!");

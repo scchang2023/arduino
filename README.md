@@ -51,5 +51,3 @@
 - 至 [Line Notify](https://notify-bot.line.me/zh_TW/) 網站申請開通服務，點選右上角的登入
 - 點選右上角的「各人頁面」，即可進入「已連動服務」管理頁面。
 - 在設定權杖頁面分別輸入名稱、對象，完成輸入後按下發行，可獲得權杖。
-gCKFIlnsFTj8JrPg7dx6tamHDzS5mizv77tuUZ7T9s1
-
