@@ -46,8 +46,8 @@
     dl_lib_free(net_boxes);
     net_boxes = NULL;
     ```
-# Line Notify 服務
-## 申請 Line Notify 權杖
+## Line Notify 服務
+### 申請 Line Notify 權杖
 - 至 [Line Notify](https://notify-bot.line.me/zh_TW/) 網站申請開通服務，點選右上角的登入
 - 點選右上角的「各人頁面」，即可進入「已連動服務」管理頁面。
 - 在設定權杖頁面分別輸入名稱、對象，完成輸入後按下發行，可獲得權杖。
@@ -57,3 +57,6 @@ client_tcp.setInsecure(); //run version 1.0.5 or above
 // connect 會回傳 fail，如已確定網址是安全的，可在以上呼叫 setInsecure。
 if (client_tcp.connect("notify-api.line.me", 443))
 ```
+## MQTT服務
+- install library pubsubclient
+- 使用 mqttlens 測試
