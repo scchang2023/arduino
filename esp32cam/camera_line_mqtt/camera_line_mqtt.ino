@@ -1,15 +1,78 @@
 #include "esp_camera.h"
-#include "FS.h" //檔案系統
-#include "SD_MMC.h" //記憶卡
+#include "FS.h" //sd card esp32
+#include "SD_MMC.h" //sd card esp32
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
-//char* ssid = "HUAWEI-B315-9878";
-//char* password = "64TA6NG2DQR";
+#include <PubSubClient.h>//請先安裝PubSubClient程式庫
+
+char* ssid = "HUAWEI-B315-9878";
+char* password = "64TA6NG2DQR";
 //char* ssid = "scchang_iphone";
 //char* password = "0928136004";
-char* ssid = "linkou203-4F";
-char* password = "56665666";
+//char* ssid = "linkou203-4F";
+//char* password = "56665666";
 String Linetoken = "WZOXUjuecnR60keRBxIKTZBOGXy2soFzvoshoJOVdsP"; //改為您的Line權杖密碼
+// ------ 以下修改成你MQTT設定 ------
+char* MQTTServer = "mqtt.eclipseprojects.io";//免註冊MQTT伺服器
+int MQTTPort = 1883;//MQTT Port
+char* MQTTUser = "";//不須帳密
+char* MQTTPassword = "";//不須帳密
+char* MQTTPubTopic1  = "yourTopic/class205/pic";//推播主題1:即時影像
+long MQTTLastPublishTime;//此變數用來記錄推播時間
+long MQTTPublishInterval = 5000;//每5秒推撥一次影像
+WiFiClient WifiClient;
+PubSubClient MQTTClient(WifiClient);
+
+//開始MQTT連線
+void MQTTConnecte() {
+  MQTTClient.setServer(MQTTServer, MQTTPort);
+  //MQTTClient.setCallback(MQTTCallback);
+  while (!MQTTClient.connected()) {
+    //以亂數為ClientID
+    String  MQTTClientid = "esp32-" + String(random(1000000, 9999999));
+    if (MQTTClient.connect(MQTTClientid.c_str(), MQTTUser, MQTTPassword)) {
+      //連結成功，顯示「已連線」。
+      Serial.println("MQTT已連線");
+      //訂閱SubTopic1主題
+      //MQTTClient.subscribe(MQTTSubTopic1);
+    } else {
+      //若連線不成功，則顯示錯誤訊息，並重新連線
+      Serial.print("MQTT連線失敗,狀態碼=");
+      Serial.println(MQTTClient.state());
+      Serial.println("五秒後重新連線");
+      delay(5000);
+    }
+  }
+}
+
+//拍照傳送到MQTT
+String SendImageMQTT() {
+  camera_fb_t * fb =  esp_camera_fb_get();
+  size_t fbLen = fb->len;
+  int ps = 512;
+  //開始傳遞影像檔
+  MQTTClient.beginPublish(MQTTPubTopic1, fbLen, false);
+  uint8_t *fbBuf = fb->buf;
+  for (size_t n = 0; n < fbLen; n = n + 2048) {
+    if (n + 2048 < fbLen) {
+      MQTTClient.write(fbBuf, 2048);
+      fbBuf += 2048;
+    } else if (fbLen % 2048 > 0) {
+      size_t remainder = fbLen % 2048;
+      MQTTClient.write(fbBuf, remainder);
+    }
+  }
+  boolean isPublished = MQTTClient.endPublish();
+  esp_camera_fb_return(fb);//清除緩衝區
+  if (isPublished) {
+    return "MQTT傳輸成功";
+  }
+  else {
+    return "MQTT傳輸失敗，請檢查網路設定";
+  }
+}
+
+//拍照傳送到Line
 String SendImageLine(String msg, camera_fb_t * fb) {
   WiFiClientSecure client_tcp;
   client_tcp.setInsecure(); //run version 1.0.5 or above
@@ -32,7 +95,6 @@ String SendImageLine(String msg, camera_fb_t * fb) {
     client_tcp.println("Authorization: Bearer " + Linetoken);
     client_tcp.println("Content-Length: " + String(totalLen));
     client_tcp.println("Content-Type: multipart/form-data; boundary=Cusboundary");
-    
     client_tcp.println();
     client_tcp.print(head);
     uint8_t *fbBuf = fb->buf;
@@ -49,7 +111,7 @@ String SendImageLine(String msg, camera_fb_t * fb) {
     }
     client_tcp.print(tail);
     client_tcp.println();
-    String Feedback = "";
+    String payload = "";
     boolean state = false;
     int waitTime = 3000;//等候時間3秒鐘
     long startTime = millis();
@@ -61,11 +123,11 @@ String SendImageLine(String msg, camera_fb_t * fb) {
       while (client_tcp.available()) {
         //已收到回覆，依序讀取內容
         char c = client_tcp.read();
-        Feedback += c;
+        payload += c;
       }
     }
     client_tcp.stop();
-    return Feedback;
+    return payload;
   }
   else {
     return "傳送失敗，請檢查網路設定";
@@ -165,13 +227,26 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
+
+  MQTTConnecte();
+
 }
 
 int i = 0; //檔案序號
 void loop() {
+  //如果MQTT連線中斷，則重啟MQTT連線
+  if (!MQTTClient.connected()) {
+    MQTTConnecte();
+  }
+  if ((millis() - MQTTLastPublishTime) >= MQTTPublishInterval ) {
+    String result = SendImageMQTT();
+    Serial.println(result);
+    MQTTLastPublishTime = millis(); //更新最後傳輸時間
+  }
+
   int pir = digitalRead(12);
-  if (1/*pir == 1*/) {
-	i++;
+  if (pir == 1) {
+    i++;
     camera_fb_t * fb = esp_camera_fb_get(); //擷取影像
     if (!fb) {
       Serial.println("拍照失敗，請檢查");
@@ -185,5 +260,5 @@ void loop() {
     }
   }
   Serial.println("無人");
-  delay(5000);
+  delay(1000);
 }
