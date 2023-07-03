@@ -3,12 +3,12 @@
 #include "SD_MMC.h" //記憶卡
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
-char* ssid = "HUAWEI-B315-9878";
-char* password = "64TA6NG2DQR";
+//char* ssid = "HUAWEI-B315-9878";
+//char* password = "64TA6NG2DQR";
 //char* ssid = "scchang_iphone";
 //char* password = "0928136004";
-//char* ssid = "linkou203-4F";
-//char* password = "56665666";
+char* ssid = "linkou203-4F";
+char* password = "56665666";
 String Linetoken = "WZOXUjuecnR60keRBxIKTZBOGXy2soFzvoshoJOVdsP"; //改為您的Line權杖密碼
 String SendImageLine(String msg, camera_fb_t * fb) {
   WiFiClientSecure client_tcp;

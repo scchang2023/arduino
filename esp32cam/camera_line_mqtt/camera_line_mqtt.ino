@@ -5,19 +5,19 @@
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>//請先安裝PubSubClient程式庫
 
-char* ssid = "HUAWEI-B315-9878";
-char* password = "64TA6NG2DQR";
+//char* ssid = "HUAWEI-B315-9878";
+//char* password = "64TA6NG2DQR";
 //char* ssid = "scchang_iphone";
 //char* password = "0928136004";
-//char* ssid = "linkou203-4F";
-//char* password = "56665666";
+char* ssid = "linkou203-4F";
+char* password = "56665666";
 String Linetoken = "WZOXUjuecnR60keRBxIKTZBOGXy2soFzvoshoJOVdsP"; //改為您的Line權杖密碼
 // ------ 以下修改成你MQTT設定 ------
 char* MQTTServer = "mqtt.eclipseprojects.io";//免註冊MQTT伺服器
 int MQTTPort = 1883;//MQTT Port
 char* MQTTUser = "";//不須帳密
 char* MQTTPassword = "";//不須帳密
-char* MQTTPubTopic1  = "yourTopic/class205/pic";//推播主題1:即時影像
+char* MQTTPubTopic1  = "iOTclass/pic";//推播主題1:即時影像
 long MQTTLastPublishTime;//此變數用來記錄推播時間
 long MQTTPublishInterval = 5000;//每5秒推撥一次影像
 WiFiClient WifiClient;
