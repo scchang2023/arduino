@@ -17,7 +17,7 @@ char* MQTTServer = "mqtt.eclipseprojects.io";//免註冊MQTT伺服器
 int MQTTPort = 1883;//MQTT Port
 char* MQTTUser = "";//不須帳密
 char* MQTTPassword = "";//不須帳密
-char* MQTTPubTopic1  = "iOTclass/pic";//推播主題1:即時影像
+char* MQTTPubTopic1  = "scchang/pic";//推播主題1:即時影像
 long MQTTLastPublishTime;//此變數用來記錄推播時間
 long MQTTPublishInterval = 5000;//每5秒推撥一次影像
 WiFiClient WifiClient;
