@@ -1,4 +1,0 @@
----- digitalWrite Matches (3 in 1 files) ----
-Smart-water.ino:	digitalWrite(pin, on);
-Smart-water.ino:		digitalWrite(PIN_WIFI_LED, LOW);
-Smart-water.ino:		digitalWrite(PIN_WIFI_LED, HIGH);
