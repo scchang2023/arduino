@@ -1,6 +1,6 @@
 # arduino
 
-- [doc](./doc/)：說明文件
+- [doc](./doc/)：文件資料夾
 - [esp32](./esp32/)
 - [esp32cam](./esp32cam/)
 - [esp8266](./esp8266/)
